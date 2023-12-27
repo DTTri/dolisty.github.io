@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.green.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/DoListyLogo-removebg.png">
 
 </head>
 <body>
   <!-- header design-->
   <header class="header">
-    <a href="#" class="logo">DoListy</a>
+    <a href="#" class="logo"><img src="images/DoListyLogo-removebg.png" alt=""></img>DoListy</a>
 
     <i class='bx bx-menu' id="menu-icon"></i>
 
@@ -148,7 +149,7 @@
     <div class="downloads-container">
       <div class="downloads-box">
         <img src="images/windows.png" class="downloadImgs" alt="">
-        <a href="#" class="btn windowsDownloadBtn">Download for Windows</a>
+        <a href="files/DoListy_1.0.exe" class="btn windowsDownloadBtn">Download for Windows</a>
       </div>
       <div class="downloads-box downloads-box-mac">
         <img src="images/apple.png" class="downloadImgs" alt="">
@@ -161,14 +162,15 @@
   <section id="feedback" class="feedback">
     <h2 class="heading">Let's Build DoListy Together</h2>
     <h2 class="heading"><span>Share Your Feedback!</span></h2>
-    <form action="#">
+    <form action="#" name="submit-to-google-sheet">
       <div class="input-box">
-        <input type="text" placeholder="Full Name">
-        <input type="email" placeholder="Email Address">
+        <input type="text" name="Full Name" placeholder="Full Name">
+        <input type="email" name="Email" placeholder="Email Address">
       </div>
-      <textarea name="" id="" cols="30" rows="10" placeholder="Your Feedback"></textarea>
+      <textarea name="Feedback" id="" cols="30" rows="10" placeholder="Your Feedback"></textarea>
       <input type="submit" value="Send Feedback" class="btn">
     </form>
+    <span id="msg"></span>
   </section>
 
   <footer class="footer">
@@ -192,7 +194,23 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
   <script src="script.js"></script>
-
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyRWkZjnNog5qT8ge7j9Ch8t2nIxGBuecIEMsgHPGoyawlP7ljrHsKha3DXK_QO8W39/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const msg = document.getElementById("msg");
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          msg.innerHTML = "Message sent successfully! Thank you for your distribution!"
+          setTimeout(function(){
+            msg.innerHTML = ""
+          },8000)
+          form.reset()
+        })
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
 </body>
 
 </html>
